@@ -10,6 +10,10 @@ resource "kubernetes_config_map" "nginx-configuration" {
     "use-proxy-protocol" = var.proxy_protocol ? "true" : "false"
     "ssl-ciphers"        = var.ssl_ciphers == "" ? null : var.ssl_ciphers
     "ssl-protocols"      = var.ssl_protocols == "" ? null : var.ssl_protocols
+
+    # LKBKS: Custom values used by Lookbooks
+    "annotations-risk-level" = "Critical"
+    "use-forwarded-headers" = "true"
   }
 }
 
