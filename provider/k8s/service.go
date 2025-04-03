@@ -190,8 +190,11 @@ func (p *Provider) ServiceUpdate(app, name string, opts structs.ServiceUpdateOpt
 	if opts.Memory != nil {
 		memorySize := resource.MustParse(fmt.Sprintf("%dMi", *opts.Memory))
 
-		d.Spec.Template.Spec.Containers[0].Resources.
-			Limits[v1.ResourceMemory] = memorySize
+		// LKBKS: Removing this as the best practice for Kubernetes is to not
+		// set limits. We don't want workloads to be OOMKilled for taking a bit
+		// more than they are allocated.
+		// d.Spec.Template.Spec.Containers[0].Resources.
+		// 	Limits[v1.ResourceMemory] = memorySize
 
 		d.Spec.Template.Spec.Containers[0].Resources.
 			Requests[v1.ResourceMemory] = memorySize
